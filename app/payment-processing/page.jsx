@@ -1,12 +1,13 @@
 'use client'
 import { useAppContext } from '@/context/AppContext'
 import { useSearchParams } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, Suspense } from 'react'
 import axios from 'axios'
 import { useAuth } from '@clerk/nextjs'
 import toast from 'react-hot-toast'
+import Loading from '@/components/Loading'
 
-const PaymentProcessing = () => {
+const PaymentProcessingContent = () => {
   const { router } = useAppContext()
   const searchParams = useSearchParams()
   const { getToken } = useAuth()
@@ -265,6 +266,14 @@ const PaymentProcessing = () => {
         </div>
       )}
     </div>
+  )
+}
+
+const PaymentProcessing = () => {
+  return (
+    <Suspense fallback={<Loading />}>
+      <PaymentProcessingContent />
+    </Suspense>
   )
 }
 

@@ -2,10 +2,11 @@
 import { assets } from '@/assets/assets'
 import { useAppContext } from '@/context/AppContext'
 import Image from 'next/image'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
+import Loading from '@/components/Loading'
 
-const OrderPlaced = () => {
+const OrderPlacedContent = () => {
   const { router } = useAppContext()
   const searchParams = useSearchParams()
   const [countdown, setCountdown] = useState(5)
@@ -92,6 +93,14 @@ const OrderPlaced = () => {
         <p>You will receive an email confirmation shortly with your order details and tracking information.</p>
       </div>
     </div>
+  )
+}
+
+const OrderPlaced = () => {
+  return (
+    <Suspense fallback={<Loading />}>
+      <OrderPlacedContent />
+    </Suspense>
   )
 }
 

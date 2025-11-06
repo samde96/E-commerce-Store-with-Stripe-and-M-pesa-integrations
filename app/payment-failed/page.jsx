@@ -1,9 +1,10 @@
 'use client'
 import { useAppContext } from '@/context/AppContext'
 import { useSearchParams } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, Suspense } from 'react'
+import Loading from '@/components/Loading'
 
-const PaymentFailed = () => {
+const PaymentFailedContent = () => {
   const { router } = useAppContext()
   const searchParams = useSearchParams()
   const [errorMessage, setErrorMessage] = useState('')
@@ -78,6 +79,14 @@ const PaymentFailed = () => {
         <p>Need help? Contact our support team</p>
       </div>
     </div>
+  )
+}
+
+const PaymentFailed = () => {
+  return (
+    <Suspense fallback={<Loading />}>
+      <PaymentFailedContent />
+    </Suspense>
   )
 }
 
